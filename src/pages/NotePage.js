@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react'
+import {useParams} from "react-router-dom";
 import { ReactComponent as ArrowLeft } from '../assets/arrow-left.svg'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const NotePage = ({ match, history }) => {
 
-    let noteId = match.params.id
+    // let noteId = match.params.id
+    const {id} = useParams()
     let [note, setNote] = useState(null)
+    const navigate = useNavigate();
 
     useEffect(() => {
         getNote()
-    }, [noteId])
+    }, [id])
 
 
     let getNote = async () => {
-        if (noteId === 'new') return
+        if (id === 'new') return
 
-        let response = await fetch(`/api/notes/${noteId}/`)
+        let response = await fetch(`/api/notes/${id}/`)
         let data = await response.json()
         setNote(data)
     }
@@ -32,7 +35,7 @@ const NotePage = ({ match, history }) => {
 
 
     let updateNote = async () => {
-        fetch(`/api/notes/${noteId}/`, {
+        fetch(`/api/notes/${id}/`, {
             method: "PUT",
             headers: {
                 'Content-Type': 'application/json'
@@ -43,25 +46,25 @@ const NotePage = ({ match, history }) => {
 
 
     let deleteNote = async () => {
-        fetch(`/api/notes/${noteId}/`, {
+        fetch(`/api/notes/${id}/`, {
             method: 'DELETE',
             'headers': {
                 'Content-Type': 'application/json'
             }
         })
-        history.push('/')
+        navigate('/')
     }
 
     let handleSubmit = () => {
         console.log('NOTE:', note)
-        if (noteId !== 'new' && note.body == '') {
+        if (id !== 'new' && note.body == '') {
             deleteNote()
-        } else if (noteId !== 'new') {
+        } else if (id !== 'new') {
             updateNote()
-        } else if (noteId === 'new' && note.body !== null) {
+        } else if (id === 'new' && note.body !== null) {
             createNote()
         }
-        history.push('/')
+        navigate('/')
     }
 
     let handleChange = (value) => {
@@ -75,7 +78,7 @@ const NotePage = ({ match, history }) => {
                 <h3>
                     <ArrowLeft onClick={handleSubmit} />
                 </h3>
-                {noteId !== 'new' ? (
+                {id !== 'new' ? (
                     <button onClick={deleteNote}>Delete</button>
                 ) : (
                     <button onClick={handleSubmit}>Done</button>
