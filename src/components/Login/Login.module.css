@@ -42,6 +42,12 @@ form {
   width: 20rem;
 }
 
+.form-control input:focus {
+  outline: none;
+  border-color: #240370;
+  background-color: #e0d4fd;
+}
+
 button {
   font: inherit;
   background-color: #240370;
@@ -57,6 +63,10 @@ button:hover,
 button:active {
   background-color: #33059e;
   border-color: #33059e;
+}
+
+.error-text {
+  color: #b40e0e;
 }
 
 .a-style {
