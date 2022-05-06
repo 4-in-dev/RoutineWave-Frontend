@@ -73,6 +73,7 @@ button:active {
 
 .error-text {
   color: #b40e0e;
+  font-size: 0.85rem;
 }
 
 .a-style {
