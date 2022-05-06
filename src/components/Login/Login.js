@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import useInput from "../../hooks/use-input";
 
 import classes from "./Login.module.css";
+import logo from '../../assets/logo-small.png'
 
 const isEmail = (value) => value.includes("@");
 const isNotEmpty = (value) => value.trim() !== "";
@@ -61,7 +62,7 @@ const Login = () => {
 
   return (
     <section>
-      <div>로고</div>
+      <div><img src={logo} alt='logo' /></div>
       <form onSubmit={submitHandler}>
         <div className={classes["form-control"]}>
           <label htmlFor="email">Email</label>

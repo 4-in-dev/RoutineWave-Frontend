@@ -10,12 +10,6 @@ section {
   padding: 3rem 0;
 }
 
-section > div:nth-child(1) {
-  border: 1px solid black;
-  width: 8rem;
-  height: 8rem;
-}
-
 form {
   margin-top: 3rem;
 }
