@@ -26,17 +26,33 @@ const Login = () => {
     reset: resetPw,
   } = useInput(isNotEmpty);
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
 
     if (!emailIsValid) {
-      emailBlurHandler()
-      return
+      emailBlurHandler();
+      return;
     }
 
     if (!pwIsValid) {
-      pwBlurHandler()
-      return
+      pwBlurHandler();
+      return;
+    }
+
+    const serverUrl = process.env.REACT_APP_SERVER_URL;
+    const reqData = {
+      method: "POST",
+      body: JSON.stringify({
+        email: emailValue,
+        password: pwValue,
+      }),
+    };
+    try {
+      const response = await fetch(serverUrl, reqData);
+      console.log('response', response)
+    } catch (error) {
+      alert('서버 요청 실패. 관리자에게 문의 해주세요.')
+      return;
     }
 
     resetEmail();
@@ -68,7 +84,7 @@ const Login = () => {
             onChange={pwChangeHandler}
             onBlur={pwBlurHandler}
           />
-          {pwHasError && <p className={classes['error-text']}>비밀번호를 입력해주세요.</p>}
+          {pwHasError && <p className={classes["error-text"]}>비밀번호를 입력해주세요.</p>}
         </div>
         <div className={classes["button-wrapper"]}>
           <button>Login</button>
