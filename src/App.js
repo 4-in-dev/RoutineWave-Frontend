@@ -5,22 +5,36 @@ import {
 } from "react-router-dom";
 
 import './App.css';
-import Header from './components/Header'
+import HeaderExample from './components/Header'
 import NotesListPage from './pages/NotesListPage'
 import NotePage from './pages/NotePage'
+import LoginPage from "./pages/User/LoginPage";
+import Header from './components/Layout/Header'
 
 function App() {
+    const isExample = false
     return (
         <Router>
-            <div className="container dark">
+        { isExample ?
+            <div className="container">
                 <div className="app">
-                    <Header/>
+                    <HeaderExample/>
                     <Routes>
                         <Route path="/" element={<NotesListPage/>}/>
                         <Route path="/note/:id" element={<NotePage/>}/>
                     </Routes>
                 </div>
             </div>
+            :
+            <>
+                <Header />
+                <main>
+                    <Routes>
+                        <Route path="/login" element={<LoginPage/>}/>
+                    </Routes>
+                </main>
+            </>
+        }
         </Router>
     );
 }

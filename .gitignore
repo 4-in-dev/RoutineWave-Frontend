@@ -43,3 +43,6 @@ thumb
 sketch
 
 # End of https://www.toptal.com/developers/gitignore/api/react
+
+# 환경 변수 파일
+.env
