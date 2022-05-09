@@ -10,6 +10,7 @@ import NotesListPage from './pages/NotesListPage'
 import NotePage from './pages/NotePage'
 import LoginPage from "./pages/User/LoginPage";
 import SignupPage from "./pages/User/SignupPage";
+import MainPage from "./pages/Main/MainPage";
 import Header from './components/Layout/Header'
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
                     <Routes>
                         <Route path="/login" element={<LoginPage/>}/>
                         <Route path="/signup" element={<SignupPage/>}/>
+                        <Route path="/main" element={<MainPage/>}/>
                     </Routes>
                 </main>
             </>
