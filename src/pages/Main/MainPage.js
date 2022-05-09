@@ -1,10 +1,12 @@
 import React from 'react'
 
+import DayRoutine from '../../components/Main/DayRoutine'
+
 const MainPage = () => {
   return (
-    <div>
-      <h1>Hello, this is mainPage</h1>
-    </div>
+    <>
+      <DayRoutine />
+    </>
   )
 }
 
