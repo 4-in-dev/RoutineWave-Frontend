@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useInput from "../../hooks/use-input";
 
 import classes from "./Signup.module.css";
@@ -19,6 +19,8 @@ const isPassword = (value) => {
 const isNotEmpty = (value) => value.trim() !== "";
 
 const Signup = () => {
+  const navigate = useNavigate();
+  
   const {
     value: emailValue,
     isValid: emailIsValid,
@@ -84,11 +86,32 @@ const Signup = () => {
     }
 
     // 회원가입 요청
-    resetEmail()
-    resetPw()
-    resetPwConfirm()
-    resetNickname()
-  }
+    const serverUrl = process.env.REACT_APP_SIGNUP_URL;
+    const reqData = {
+      method: "POST",
+      body: JSON.stringify({
+        email: emailValue,
+        password: pwValue,
+        username: nicknameValue,
+      }),
+    };
+    try {
+      const response = await fetch(serverUrl, reqData);
+      const responseData = response.json();
+      if (responseData.success) {
+        navigate('/login');
+      } else {
+        alert("회원가입 실패. 관리자에게 문의 해주세요.");  
+      }
+    } catch (error) {
+      alert("서버 요청 실패. 관리자에게 문의 해주세요.");
+    }
+
+    resetEmail();
+    resetPw();
+    resetPwConfirm();
+    resetNickname();
+  };
 
   return (
     <section>
@@ -147,9 +170,7 @@ const Signup = () => {
             onChange={nicknameChangeHandler}
             onBlur={nicknameBlurHandler}
           />
-          {nicknameHasError && (
-            <p className={classes["error-text"]}>닉네임을 입력해주세요.</p>
-          )}
+          {nicknameHasError && <p className={classes["error-text"]}>닉네임을 입력해주세요.</p>}
         </div>
         <div className={classes["button-wrapper"]}>
           <button>REGISTER</button>
