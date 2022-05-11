@@ -101,7 +101,7 @@ const DayRoutine = () => {
       <h1>MY ROUTINE</h1>
       <div className="day-routine-container">
         <div className="add-btn-wrapper">
-          <button onClick={showAddRountineHandler}>일과 추가</button>
+          <button className="add-btn-job" onClick={showAddRountineHandler}>일과 추가</button>
         </div>
         <div className="day-routine-wrapper">
           <PieChart data={data} options={options} />
