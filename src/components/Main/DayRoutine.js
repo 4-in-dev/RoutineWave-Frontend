@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { PieChart } from "@toast-ui/react-chart";
 
 import "./DayRoutine.css";
+import Modal from "../UI/Modal";
+import DayRoutineMaker from './DayRoutineMaker'
 
 let data = {
   categories: ["MyRoutine"],
@@ -58,7 +60,7 @@ const options = {
     },
     angleRange: {
       start: -15,
-      end: 345
+      end: 345,
     },
     // selectable: true
   },
@@ -79,19 +81,34 @@ const options = {
 
 const DayRoutine = () => {
   const [hourText, setHourText] = useState([]);
+  const [addRoutineModalIsShown, setAddRoutineModalIsShown] = useState(false);
 
   useEffect(() => {
-    const numArr = Array.from({length:24}, (v, i) => i+1)
-    setHourText(numArr)
+    const numArr = Array.from({ length: 24 }, (v, i) => i + 1);
+    setHourText(numArr);
   }, []);
+
+  const showAddRountineHandler = () => {
+    setAddRoutineModalIsShown(true);
+  };
+  const hideAddRountineHandler = () => {
+    setAddRoutineModalIsShown(false);
+  };
+
   return (
     <>
+      {addRoutineModalIsShown && <Modal onClose={hideAddRountineHandler}><DayRoutineMaker /></Modal>}
       <h1>MY ROUTINE</h1>
-      <div className='day-routine-wrapper'>
-        <PieChart data={data} options={options} />
-        {hourText.map(hour => (
-          <p>{hour}</p>
-        ))}
+      <div className="day-routine-container">
+        <div className="add-btn-wrapper">
+          <button onClick={showAddRountineHandler}>일과 추가</button>
+        </div>
+        <div className="day-routine-wrapper">
+          <PieChart data={data} options={options} />
+          {hourText.map((hour) => (
+            <p key={hour}>{hour}</p>
+          ))}
+        </div>
       </div>
     </>
   );

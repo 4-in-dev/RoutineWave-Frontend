@@ -1,14 +1,19 @@
+.day-routine-container {
+  width: 100%;
+  max-width: 615px;
+
+  border: 3px solid rgb(209, 217, 226);
+  border-radius: 4px;
+}
+
 .toastui-chart-tooltip-container {
   display: none;
 }
 
 .toastui-chart-wrapper {
   width: 100%;
-  max-width: 610px;
+  max-width: 615px;
   text-align: center;
-
-  border: 3px solid rgb(209, 217, 226);
-  border-radius: 4px;
 
   padding: 2rem 0;
 }
@@ -18,15 +23,14 @@ h1 {
 }
 
 .day-routine-wrapper {
-  max-width: 610px;
-  border: 1px solid purple;
+  max-width: 615px;
   position: relative;
 }
 .day-routine-wrapper > p {
   position: absolute;
   top: 46%;
   left:48.7%;
-  z-index: 100;
+  z-index: 9;
 }
 .day-routine-wrapper > p:nth-of-type(1) {
   transform: translate(67px, -237px) rotate(15deg);
@@ -101,6 +105,10 @@ h1 {
   transform: translate(0, -246px);
 }
 
-
+.add-btn-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: right;
+}
 
 

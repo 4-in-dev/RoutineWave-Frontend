@@ -1,0 +1,57 @@
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputWrapper > div {
+  margin-bottom: 1rem;
+}
+
+/* 종료 버튼 영역 */
+.inputWrapper > div:nth-of-type(1) {
+  display: flex;
+  justify-content: right;
+}
+.inputWrapper > div:nth-of-type(1) > button {
+  width: 1rem;
+  margin-right: -1rem;
+  color: black;
+  border-radius: 30px;
+}
+
+/* 타이틀 영역 */
+.inputWrapper > div:nth-of-type(2) {
+  width: 100%;
+}
+.inputWrapper > div:nth-of-type(2) > div {
+  width: 100%;
+}
+
+/* 타임 픽커 영역 */
+.inputWrapper > div:nth-of-type(3) {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* 달성 체크박스 폰트 */
+.inputWrapper > div:nth-of-type(4) {
+  display: flex;
+  justify-content: right;
+}
+.inputWrapper > div:nth-of-type(4) > div > label > span {
+  font-size: 14px;
+}
+
+/* 저장 버튼 */
+.inputWrapper > div:nth-of-type(5) {
+  display: flex;
+  justify-content: right;
+}
+.inputWrapper > div:nth-of-type(5) > button {
+  width: 20%;
+  background-color: rgb(46, 144, 245);
+}
+
+.todayMDD {
+  font-size: 12px;
+}
