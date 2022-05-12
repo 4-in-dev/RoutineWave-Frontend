@@ -102,7 +102,7 @@ h1 {
   transform: translate(-63px, -237px) rotate(345deg);
 }
 .day-routine-wrapper > p:nth-of-type(24) {
-  transform: translate(0, -246px);
+  transform: translate(4px, -246px);
 }
 
 .add-btn-wrapper {
