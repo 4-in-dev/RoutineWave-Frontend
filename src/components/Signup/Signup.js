@@ -84,17 +84,41 @@ const Signup = () => {
     }
 
     // 회원가입 요청
-    resetEmail()
-    resetPw()
-    resetPwConfirm()
-    resetNickname()
-  }
+    const serverUrl = process.env.REACT_APP_SIGNUP_URL;
+    const reqData = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: emailValue,
+        password1: pwValue,
+        password2: pwConfirmValue,
+      }),
+    };
+
+    try {
+      const response = await fetch(serverUrl, reqData);
+      const responseData = await response.json();
+      
+      document.location.href='/';
+    } catch (error) {
+      alert("회원가입 실패. 관리자에게 문의 해주세요.");
+      return;
+    }
+
+    // 회원가입 요청
+    resetEmail();
+    resetPw();
+    resetPwConfirm();
+    resetNickname();
+  };
 
   return (
     <section>
       <div>
         <img src={logo} alt="logo" />
-        <p>RoutinWave 계정 생성</p>
+        <p>RoutineWave 계정 생성</p>
       </div>
       <form onSubmit={submitHandler}>
         <div className={classes["form-control"]}>
@@ -147,9 +171,7 @@ const Signup = () => {
             onChange={nicknameChangeHandler}
             onBlur={nicknameBlurHandler}
           />
-          {nicknameHasError && (
-            <p className={classes["error-text"]}>닉네임을 입력해주세요.</p>
-          )}
+          {nicknameHasError && <p className={classes["error-text"]}>닉네임을 입력해주세요.</p>}
         </div>
         <div className={classes["button-wrapper"]}>
           <button>REGISTER</button>
