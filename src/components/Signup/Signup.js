@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import useInput from "../../hooks/use-input";
+import { useNavigate } from "react-router-dom";
 
 import classes from "./Signup.module.css";
 import logo from "../../assets/logo-small.png";
@@ -19,6 +20,8 @@ const isPassword = (value) => {
 const isNotEmpty = (value) => value.trim() !== "";
 
 const Signup = () => {
+  const navigate = useNavigate();
+
   const {
     value: emailValue,
     isValid: emailIsValid,
@@ -84,7 +87,7 @@ const Signup = () => {
     }
 
     // 회원가입 요청
-    const serverUrl = process.env.REACT_APP_SIGNUP_URL;
+    const serverUrl = process.env.REACT_APP_SERVER_URL;
     const reqData = {
       method: "POST",
       headers: {
@@ -100,8 +103,14 @@ const Signup = () => {
     try {
       const response = await fetch(serverUrl, reqData);
       const responseData = await response.json();
-      
-      document.location.href='/';
+      if (response.status < 300 && response.status >= 200) {
+        alert(`${nicknameValue} 님 환영합니다`);
+        navigate('/login');
+      } else {
+        if (responseData.hasOwnProperty('email')) {
+          alert('중복된 이메일이 있습니다.');
+        }
+      }
     } catch (error) {
       alert("회원가입 실패. 관리자에게 문의 해주세요.");
       return;
