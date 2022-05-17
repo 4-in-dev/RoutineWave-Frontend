@@ -50,7 +50,8 @@ a {
 }
 
 main {
-  margin-top: 119px;
+  margin: 119px auto 0 auto;
+  max-width: 980px;
 }
 
 /* APP STYLES */
