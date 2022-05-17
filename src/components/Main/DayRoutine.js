@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { getSeriesData, getRoutineTableOptions } from "./MyRoutineHelper";
 
@@ -13,9 +14,11 @@ const DayRoutine = () => {
   const [hourText, setHourText] = useState([]);
   const [chartReRenderHelper, setChartReRenderHelper] = useState([1]);
   const [addRoutineModalIsShown, setAddRoutineModalIsShown] = useState(false);
+  const navigate = useNavigate();
 
   const myRountineSeries = useSelector((state) => state.job.series);
   const myRountineStartAngle = useSelector((state) => state.job.angleRange);
+  const isAuth = useSelector((state) => state.auth.isAuthenticated);
   const data = getSeriesData(myRountineSeries);
   const options = getRoutineTableOptions(myRountineStartAngle);
 
@@ -23,6 +26,10 @@ const DayRoutine = () => {
 
   useEffect(() => {
     // 시간 텍스트 세팅
+    if (!isAuth) {
+      navigate("/login");
+    }
+
     const numArr = Array.from({ length: 24 }, (v, i) => i + 1);
     numArr[23] = 0;
     setHourText(numArr);
