@@ -9,6 +9,7 @@ import { PieChart } from "@toast-ui/react-chart";
 import "./DayRoutine.css";
 import Modal from "../UI/Modal";
 import DayRoutineMaker from "./DayRoutineMaker";
+import styled from 'styled-components'
 
 const DayRoutine = () => {
   const [hourText, setHourText] = useState([]);
@@ -57,24 +58,30 @@ const DayRoutine = () => {
           <DayRoutineMaker onClose={hideAddRountineHandler} />
         </Modal>
       )}
-      <h1>MY ROUTINE</h1>
-      <div className="day-routine-container">
-        <div className="add-btn-wrapper">
-          <button className="add-btn-job" onClick={showAddRountineHandler}>
-            일과 추가
-          </button>
+      <MyRoutineWrapper>
+        <h1>MY ROUTINE</h1>
+        <div className="day-routine-container">
+          <div className="add-btn-wrapper">
+            <button className="add-btn-job" onClick={showAddRountineHandler}>
+              일과 추가
+            </button>
+          </div>
+          <div className="day-routine-wrapper">
+            {chartReRenderHelper.map((t, i) => (
+              <PieChart ref={chartRef} data={data} options={options} key={i} />
+            ))}
+            {hourText.map((hour) => (
+              <p key={hour}>{hour}</p>
+            ))}
+          </div>
         </div>
-        <div className="day-routine-wrapper">
-          {chartReRenderHelper.map((t, i) => (
-            <PieChart ref={chartRef} data={data} options={options} key={i} />
-          ))}
-          {hourText.map((hour) => (
-            <p key={hour}>{hour}</p>
-          ))}
-        </div>
-      </div>
+      </MyRoutineWrapper>
     </>
   );
 };
+
+const MyRoutineWrapper = styled.div`
+  width: 70%
+`
 
 export default DayRoutine;
