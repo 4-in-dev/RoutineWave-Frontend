@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import classes from "./Signup.module.css";
 import logo from "../../assets/logo-small.png";
+import styled from "styled-components";
 
 const isEmail = (value) => {
   const emailRegExp =
@@ -105,10 +106,10 @@ const Signup = () => {
       const responseData = await response.json();
       if (response.status < 300 && response.status >= 200) {
         alert(`${nicknameValue} 님 환영합니다`);
-        navigate('/login');
+        navigate("/login");
       } else {
-        if (responseData.hasOwnProperty('email')) {
-          alert('중복된 이메일이 있습니다.');
+        if (responseData.hasOwnProperty("email")) {
+          alert("중복된 이메일이 있습니다.");
         }
       }
     } catch (error) {
@@ -183,11 +184,28 @@ const Signup = () => {
           {nicknameHasError && <p className={classes["error-text"]}>닉네임을 입력해주세요.</p>}
         </div>
         <div className={classes["button-wrapper"]}>
-          <button>REGISTER</button>
+          <CustomButton className={classes["custom-btn"]}>REGISTER</CustomButton>
         </div>
       </form>
     </section>
   );
 };
+
+const CustomButton = styled.button`
+  font: inherit;
+  background-color: #240370;
+  color: white;
+  border: 1px solid #240370;
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
+  width: 20rem;
+  cursor: pointer;
+
+  &:hover,
+  &:active {
+    background-color: #33059e;
+    border-color: #33059e;
+  }
+`;
 
 export default Signup;

@@ -15,9 +15,9 @@ const jobToDayRoutine = (state, action) => {
   if (jobs.length > 1) {
     for (let i = 0; i < jobs.length - 1; i++) {
       let timeGap = jobs[i + 1][1] - jobs[i][1];
-      let periodTime = Math.floor(timeGap / 100) + (timeGap % 100 > 0 ? 0.5 : 0)
-      
-      series.push({ name: jobs[i][0], data: periodTime});
+      let periodTime = Math.floor(timeGap / 100) + (timeGap % 100 > 0 ? 0.5 : 0);
+
+      series.push({ name: jobs[i][0], data: periodTime });
       totalTime += periodTime;
     }
     series.push({ name: jobs[jobs.length - 1][0], data: 24 - totalTime });
@@ -31,11 +31,11 @@ const jobToDayRoutine = (state, action) => {
 
 const getStartEndAngle = (state) => {
   const startTime = state.jobs[0][1];
-  const startAngle =  Math.floor(startTime / 100) + (startTime % 100 > 0 ? 0.5 : 0)
-  
+  const startAngle = Math.floor(startTime / 100) + (startTime % 100 > 0 ? 0.5 : 0);
+
   return {
-    start: 15*startAngle,
-    end: 360+(15*startAngle),
+    start: 15 * startAngle,
+    end: 360 + 15 * startAngle,
   };
 };
 
@@ -52,7 +52,7 @@ const initialJobState = {
   series: [],
   jobs: [],
   angleRange: { start: 0, end: 360 },
-  date: moment().format("dddd, Do MMMM"),
+  date: moment().format("YYYY-MM-DD"),
 };
 
 const jobSlice = createSlice({
@@ -75,6 +75,9 @@ const jobSlice = createSlice({
     setIsFinished(state, action) {
       state.currItem.data.isFinish = action.payload;
     },
+    setCurrDate(state, action) {
+      state.date = action.payload;
+    }
   },
 });
 
