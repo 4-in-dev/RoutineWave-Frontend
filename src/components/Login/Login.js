@@ -71,7 +71,7 @@ const Login = () => {
       }
       // access Token
       setCookie("is_login", responseData.access_token);
-      dispatch(authActions.login());
+      dispatch(authActions.login(responseData));
       navigate('/main');
     } catch (error) {
       alert("로그인 실패. 관리자에게 문의 해주세요.");

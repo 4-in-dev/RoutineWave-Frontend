@@ -1,9 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import classes from "./Nav.module.css";
-import { authActions } from "../../store/auth";
 
 const Nav = () => {
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
@@ -26,6 +25,7 @@ const Nav = () => {
               <Link to="/main">일정</Link>
             </li>
             <li>
+              
               <Link to="/logout">로그아웃</Link>
             </li>
           </>
