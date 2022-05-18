@@ -42,23 +42,6 @@ form {
   background-color: #e0d4fd;
 }
 
-button {
-  font: inherit;
-  background-color: #240370;
-  color: white;
-  border: 1px solid #240370;
-  padding: 0.5rem 1.5rem;
-  border-radius: 4px;
-  width: 20rem;
-  cursor: pointer;
-}
-
-button:hover,
-button:active {
-  background-color: #33059e;
-  border-color: #33059e;
-}
-
 .error-text {
   color: #b40e0e;
 }
