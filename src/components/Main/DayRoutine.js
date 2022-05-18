@@ -17,6 +17,7 @@ const DayRoutine = () => {
   const [addRoutineModalIsShown, setAddRoutineModalIsShown] = useState(false);
   const navigate = useNavigate();
 
+  const currDate = useSelector((state) => state.job.date);
   const myRountineSeries = useSelector((state) => state.job.series);
   const myRountineStartAngle = useSelector((state) => state.job.angleRange);
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
@@ -62,6 +63,7 @@ const DayRoutine = () => {
         <h1>MY ROUTINE</h1>
         <div className="day-routine-container">
           <div className="add-btn-wrapper">
+            <CurrentDate>{currDate}</CurrentDate>
             <button className="add-btn-job" onClick={showAddRountineHandler}>
               일과 추가
             </button>
@@ -79,6 +81,11 @@ const DayRoutine = () => {
     </>
   );
 };
+
+const CurrentDate = styled.span`
+  margin-top: 1rem;
+  margin-left: 1rem;
+`
 
 const MyRoutineWrapper = styled.div`
   width: 70%

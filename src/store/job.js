@@ -75,6 +75,9 @@ const jobSlice = createSlice({
     setIsFinished(state, action) {
       state.currItem.data.isFinish = action.payload;
     },
+    setCurrDate(state, action) {
+      state.date = action.payload;
+    }
   },
 });
 

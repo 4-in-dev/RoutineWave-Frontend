@@ -108,7 +108,7 @@ h1 {
 .add-btn-wrapper {
   width: 100%;
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
 }
 
 .add-btn-job {
