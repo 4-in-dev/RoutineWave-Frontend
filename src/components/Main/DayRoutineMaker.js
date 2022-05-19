@@ -50,6 +50,8 @@ const DayRoutineMaker = (props) => {
     try {
       const response = await fetch(serverUrl, reqData);
       const responseData = await response.json();
+      
+      dispatch(jobActions.addJob(responseData));
     } catch (error) {
       console.log(error.message);
       return false;
@@ -57,7 +59,7 @@ const DayRoutineMaker = (props) => {
     return true;
   };
 
-  const saveJobHandler = (e) => {
+  const saveJobHandler = async (e) => {
     e.preventDefault();
 
     if (data.content === "") {
@@ -76,14 +78,12 @@ const DayRoutineMaker = (props) => {
       return;
     }
 
-    dispatch(jobActions.addJob(data));
-
     // 일정 저장 request
-    if(!reqSaveJob()) {
+    if(!await reqSaveJob()) {
       alert('일정 저장에 실패 하였습니다.');
       return;
-    }
-
+    } 
+    
     // 일정 저장 후 정리
     props.onClose();
     dispatch(jobActions.setContent(""));

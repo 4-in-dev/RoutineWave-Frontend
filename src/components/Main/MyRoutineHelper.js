@@ -24,20 +24,14 @@ export const getRoutineTableOptions = (angleRange) => {
           return `${hour} Hours`;
         },
       },
-      angleRange: angleRange
+      angleRange: angleRange,
+      selectable: true
     },
     exportMenu: {
       visible: false,
     },
     legend: {
       visible: false,
-    },
-    theme: {
-      series: {
-        hover: {
-          lineWidth: 1,
-        },
-      },
     }
   };
 };
