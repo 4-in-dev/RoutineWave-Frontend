@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import "./App.css";
 import HeaderExample from "./components/Header";
@@ -12,6 +13,7 @@ import Header from "./components/Layout/Header";
 
 function App() {
   const isExample = false;
+  const isAuth = useSelector((state) => state.auth.isAuthenticated);
   return (
     <Router>
       {isExample ? (
@@ -32,7 +34,8 @@ function App() {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/logout" element={<LogoutPage />} />
               <Route path="/signup" element={<SignupPage />} />
-              <Route path="/main" element={<MainPage />} />
+              {isAuth && <Route path="/main" element={<MainPage />} />}
+              {!isAuth && <Route path="/main" element={<Navigate replace to='/login' />} />}
             </Routes>
           </main>
         </>

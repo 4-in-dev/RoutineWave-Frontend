@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 import { getSeriesData, getRoutineTableOptions } from "./MyRoutineHelper";
 import { jobActions } from "../../store/job";
@@ -12,6 +11,7 @@ import "./DayRoutine.css";
 import Modal from "../UI/Modal";
 import DayRoutineMaker from "./DayRoutineMaker";
 import styled from "styled-components";
+import DayRoutineUpdater from "./DayRoutineUpdater";
 
 const INIT_JOB_INDEX = -1;
 const JOB_ID_INDEX = 2;
@@ -20,27 +20,21 @@ const DayRoutine = () => {
   const [hourText, setHourText] = useState([]);
   const [chartReRenderHelper, setChartReRenderHelper] = useState([1]);
   const [addRoutineModalIsShown, setAddRoutineModalIsShown] = useState(false);
+  const [updateRoutineModalIsShown, setUpdateRoutineModalIsShown] = useState(false);
   const [isSelectedJob, setIsSelectedJob] = useState(false);
   const [selectedJob, setSelectedJob] = useState(INIT_JOB_INDEX);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const entireJobs = useSelector((state) => state.job.jobs);
   const currDate = useSelector((state) => state.job.date);
   const myRountineSeries = useSelector((state) => state.job.series);
   const myRountineStartAngle = useSelector((state) => state.job.angleRange);
-  const isAuth = useSelector((state) => state.auth.isAuthenticated);
   const data = getSeriesData(myRountineSeries);
   const options = getRoutineTableOptions(myRountineStartAngle);
 
   const chartRef = useRef(null);
 
   useEffect(() => {
-    // 시간 텍스트 세팅
-    if (!isAuth) {
-      navigate("/login");
-    }
-
     const numArr = Array.from({ length: 24 }, (v, i) => i + 1);
     numArr[23] = 0;
     setHourText(numArr);
@@ -51,8 +45,13 @@ const DayRoutine = () => {
   const showAddRountineHandler = () => {
     setAddRoutineModalIsShown(true);
   };
-  const hideAddRountineHandler = () => {
+  const showUpdateRountineHandler = () => {
+    setUpdateRoutineModalIsShown(true);
+  };
+  const hideModalHandler = () => {
     setAddRoutineModalIsShown(false);
+    setUpdateRoutineModalIsShown(false);
+    setIsSelectedJob(false);
     reRenderAndDestroyPreviousChart();
   };
 
@@ -94,8 +93,17 @@ const DayRoutine = () => {
   return (
     <>
       {addRoutineModalIsShown && (
-        <Modal onClose={hideAddRountineHandler}>
-          <DayRoutineMaker onClose={hideAddRountineHandler} />
+        <Modal onClose={hideModalHandler}>
+          <DayRoutineMaker onClose={hideModalHandler} />
+        </Modal>
+      )}
+      {updateRoutineModalIsShown && (
+        <Modal onClose={hideModalHandler}>
+          <DayRoutineUpdater
+            onClose={hideModalHandler}
+            selectedJob={entireJobs[selectedJob]}
+            selectedJobIndexInSeries={selectedJob}
+          />
         </Modal>
       )}
       <MyRoutineWrapper>
@@ -109,7 +117,10 @@ const DayRoutine = () => {
               </button>
             )}
             {isSelectedJob && (
-              <RemoveJobButton onClick={clickedRemoveButton}>일정 삭제</RemoveJobButton>
+              <UpdateAndDeleteBtnWrapper>
+                <OrangeButton onClick={showUpdateRountineHandler}>일정 변경</OrangeButton>
+                <OrangeButton onClick={clickedRemoveButton}>일정 삭제</OrangeButton>
+              </UpdateAndDeleteBtnWrapper>
             )}
           </div>
           <div className="day-routine-wrapper">
@@ -138,12 +149,18 @@ const CurrentDate = styled.span`
   margin-left: 1rem;
 `;
 
+const UpdateAndDeleteBtnWrapper = styled.div`
+  width: 60%;
+  display: flex;
+  justify-content: right;
+`;
+
 const MyRoutineWrapper = styled.div`
   width: 70%;
 `;
 
-const RemoveJobButton = styled.button`
-  width: 20%;
+const OrangeButton = styled.button`
+  width: 7rem;
   margin-top: 1rem;
   margin-right: 1rem;
   background-color: rgb(240, 109, 6);

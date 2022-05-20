@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Checkbox, FormGroup, FormControlLabel, Button } from "@mui/material";
@@ -10,14 +10,19 @@ import TimePicker from "rc-time-picker";
 import { jobActions } from "../../store/job";
 import { getHHmmFormat } from "../../lib/util";
 import classes from "./DayRoutineMaker.module.css";
+import * as CONSTANT from '../../lib/constants'
 
-const DayRoutineMaker = (props) => {
+const DayRoutineUpdater = (props) => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.job.currItem.data);
   const currDate = useSelector((state) => state.job.date);
   const isFinish = useSelector((state) => state.job.currItem.data.isFinish);
-  const savedJobs = useSelector((state) => state.job.jobs);
-  const auth = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(jobActions.setContent(props.selectedJob[CONSTANT.INDEX_OF_CONTENT]));
+    dispatch(jobActions.setStartTime(props.selectedJob[CONSTANT.INDEX_OF_STARTTIME]));
+    dispatch(jobActions.setIsFinished(props.selectedJob[CONSTANT.INDEX_OF_IS_FINISH]));
+  }, []);
 
   const contentHandler = (e) => {
     dispatch(jobActions.setContent(e.target.value));
@@ -31,27 +36,28 @@ const DayRoutineMaker = (props) => {
     dispatch(jobActions.setIsFinished(e.target.checked));
   };
 
-  const reqSaveJob = async () => {
-    const serverUrl = `${process.env.REACT_APP_SERVER_URL}api/schedule/`;
+  const reqUpdateJob = async () => {
+    const serverUrl = `${process.env.REACT_APP_SERVER_URL}api/schedule/${props.selectedJob[CONSTANT.INDEX_OF_JOB]}/`;
     const reqData = {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        writer: auth.user.pk,
         schedule_date: `${currDate}T00:00`,
         content: data.content,
         is_finished: data.isFinish,
-        start_time: `${currDate}T${getHHmmFormat(data.startTime)}`,
+        start_time: `${currDate}T${getHHmmFormat(String(data.startTime))}`,
         end_time: `${currDate}T00:00`,
       }),
     };
     try {
       const response = await fetch(serverUrl, reqData);
       const responseData = await response.json();
-      
-      dispatch(jobActions.addJob(responseData));
+
+      dispatch(
+        jobActions.updateJob({ data: responseData, seriesId: props.selectedJobIndexInSeries })
+      );
     } catch (error) {
       console.log(error.message);
       return false;
@@ -72,18 +78,12 @@ const DayRoutineMaker = (props) => {
       return;
     }
 
-    const checkDuplication = savedJobs.find((job) => job[1] === startTime);
-    if (checkDuplication) {
-      alert("작성된 시간에 일정이 있습니다.");
+    // 일정 저장 request
+    if (!(await reqUpdateJob())) {
+      alert("일정 저장에 실패 하였습니다.");
       return;
     }
 
-    // 일정 저장 request
-    if(!await reqSaveJob()) {
-      alert('일정 저장에 실패 하였습니다.');
-      return;
-    } 
-    
     // 일정 저장 후 정리
     props.onClose();
     dispatch(jobActions.setContent(""));
@@ -98,13 +98,15 @@ const DayRoutineMaker = (props) => {
           <Button onClick={props.onClose}>x</Button>
         </div>
         <div>
-          <Input placeholder="내용" onChange={contentHandler} />
+          <Input placeholder="내용" onChange={contentHandler} value={data.content || ""} />
         </div>
         <div>
           <span>start time:</span>
           <span className={classes.todayMDD}>{currDate}</span>
           <TimePicker
-            defaultOpenValue={moment()}
+            defaultValue={moment()
+              .hour(props.selectedJob[CONSTANT.INDEX_OF_STARTTIME] / 100)
+              .minute(props.selectedJob[CONSTANT.INDEX_OF_STARTTIME] % 100)}
             showSecond={false}
             minuteStep={30}
             allowEmpty={false}
@@ -114,14 +116,16 @@ const DayRoutineMaker = (props) => {
         <div>
           <FormGroup>
             <FormControlLabel
-              control={<Checkbox size="small" checked={isFinish} onChange={completeJobHandler} />}
+              control={
+                <Checkbox size="small" checked={isFinish || false} onChange={completeJobHandler} />
+              }
               label="달성"
             />
           </FormGroup>
         </div>
         <div>
           <Button type="submit" variant="contained" size="small">
-            저장
+            수정
           </Button>
         </div>
       </form>
@@ -129,4 +133,4 @@ const DayRoutineMaker = (props) => {
   );
 };
 
-export default DayRoutineMaker;
+export default DayRoutineUpdater;

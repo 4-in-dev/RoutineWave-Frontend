@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import moment from "moment";
-import { removeElementFromArray, jobToDayRoutine } from "../lib/util";
+import { removeElementFromArray, updateElementFromArray, jobToDayRoutine } from "../lib/util";
 
 const addAndGetSeries = (state, action) => {
   const registeredJob = action.payload;
@@ -12,10 +12,6 @@ const addAndGetSeries = (state, action) => {
   const isFinished = registeredJob.is_finished;
 
   let jobs = [...state.jobs, [content, Number(startTime), id, isFinished]];
-  jobs = jobs.sort((a, b) => {
-    return a[1] - b[1];
-  });
-
   state.jobs = jobs;
 
   return jobToDayRoutine(jobs);
@@ -74,6 +70,11 @@ const jobSlice = createSlice({
     },
     removeJob(state, action) {
       state.jobs = removeElementFromArray(state.jobs, action.payload);
+      state.series = jobToDayRoutine(state.jobs);
+      state.angleRange = getStartEndAngle(state);
+    },
+    updateJob(state, action) {
+      state.jobs = updateElementFromArray(state.jobs, action.payload);
       state.series = jobToDayRoutine(state.jobs);
       state.angleRange = getStartEndAngle(state);
     },
