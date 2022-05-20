@@ -19,7 +19,7 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
       state.accessToken = action.payload.access_token;
       state.refreshToken = action.payload.refresh_token;
-      state.user.pk = action.payload.user.pk;
+      state.user.pk = action.payload.user.id;
       state.user.email = action.payload.user.email;
     },
     logout(state) {
