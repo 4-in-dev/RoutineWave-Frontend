@@ -21,6 +21,7 @@ const authSlice = createSlice({
       state.refreshToken = action.payload.refresh_token;
       state.user.pk = action.payload.user.id;
       state.user.email = action.payload.user.email;
+      state.user.nickname = action.payload.user.nick_name;
     },
     logout(state) {
       state.isAuthenticated = false;

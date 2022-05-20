@@ -8,11 +8,11 @@ import styled from "styled-components";
 
 const MainPage = () => {
   const user = useSelector((state) => state.auth.user);
-
+  
   return (
     <>
       <InfoWrapper>
-        <span>안녕하세요! {user.email} 님</span>
+        <span>안녕하세요! {user.nickname} 님</span>
       </InfoWrapper>
       <RoutineWrapper>
         <DayRoutine />
