@@ -36,11 +36,6 @@ const DayRoutine = () => {
   const chartRef = useRef(null);
 
   useEffect(() => {
-    // 시간 텍스트 세팅
-    if (!isAuth) {
-      navigate("/login");
-    }
-
     const numArr = Array.from({ length: 24 }, (v, i) => i + 1);
     numArr[23] = 0;
     setHourText(numArr);
