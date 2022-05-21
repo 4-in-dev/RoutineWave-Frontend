@@ -98,6 +98,7 @@ const Signup = () => {
         email: emailValue,
         password1: pwValue,
         password2: pwConfirmValue,
+        nick_name: nicknameValue
       }),
     };
 
