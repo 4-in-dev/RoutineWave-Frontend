@@ -51,6 +51,12 @@ const DayRoutine = () => {
     fetchDayJob();
   }, []);
 
+  useEffect(() => {
+    if (chartReRenderHelper.length > 1 ){
+      reRenderAndDestroyPreviousChart();
+    }
+  }, [myRountineStartAngle]);
+
   const showAddRountineHandler = () => {
     setAddRoutineModalIsShown(true);
   };
@@ -92,11 +98,11 @@ const DayRoutine = () => {
   };
 
   const reRenderAndDestroyPreviousChart = () => {
-    setChartReRenderHelper([...chartReRenderHelper, 1]);
     chartRef.current.getInstance().destroy();
     document
       .querySelector(".day-routine-wrapper")
       .removeChild(document.querySelector(".day-routine-wrapper > div"));
+    setChartReRenderHelper([...chartReRenderHelper, 1]);
   };
 
   return (

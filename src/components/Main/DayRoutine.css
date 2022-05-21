@@ -1,6 +1,7 @@
 .day-routine-container {
   width: 100%;
   max-width: 615px;
+  min-height:640px;
 
   border: 3px solid rgb(209, 217, 226);
   border-radius: 4px;
@@ -28,7 +29,7 @@ h1 {
 }
 .day-routine-wrapper > p {
   position: absolute;
-  top: 46%;
+  top: 16.4rem;
   left:48.7%;
   z-index: 9;
 }
