@@ -10,6 +10,18 @@ section {
   padding: 3rem 0;
 }
 
+section > div:nth-child(1) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+section > div:nth-child(1) > p {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+}
+
 form {
   margin-top: 3rem;
 }
@@ -44,6 +56,7 @@ form {
 
 .error-text {
   color: #b40e0e;
+  font-size: 0.85rem;
 }
 
 .a-style {

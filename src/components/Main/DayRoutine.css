@@ -1,0 +1,129 @@
+.day-routine-container {
+  width: 100%;
+  max-width: 615px;
+
+  border: 3px solid rgb(209, 217, 226);
+  border-radius: 4px;
+}
+
+.toastui-chart-tooltip-container {
+  display: none;
+}
+
+.toastui-chart-wrapper {
+  width: 100%;
+  max-width: 615px;
+  text-align: center;
+
+  padding: 2rem 0;
+}
+
+h1 {
+  color: rgb(64, 156, 250)
+}
+
+.day-routine-wrapper {
+  max-width: 615px;
+  position: relative;
+}
+.day-routine-wrapper > p {
+  position: absolute;
+  top: 46%;
+  left:48.7%;
+  z-index: 9;
+}
+.day-routine-wrapper > p:nth-of-type(1) {
+  transform: translate(67px, -237px) rotate(15deg);
+}
+.day-routine-wrapper > p:nth-of-type(2) {
+  transform: translate(126px, -213px) rotate(30deg);
+}
+.day-routine-wrapper > p:nth-of-type(3) {
+  transform: translate(177px, -173px) rotate(45deg);
+}
+.day-routine-wrapper > p:nth-of-type(4) {
+  transform: translate(217px, -123px) rotate(60deg);
+}
+.day-routine-wrapper > p:nth-of-type(5) {
+  transform: translate(241px, -63px) rotate(75deg);
+}
+.day-routine-wrapper > p:nth-of-type(6) {
+  transform: translate(246px, 0) rotate(90deg);
+}
+.day-routine-wrapper > p:nth-of-type(7) {
+  transform: translate(241px, 63px) rotate(105deg);
+}
+.day-routine-wrapper > p:nth-of-type(8) {
+  transform: translate(217px, 123px) rotate(120deg);
+}
+.day-routine-wrapper > p:nth-of-type(9) {
+  transform: translate(177px, 173px) rotate(135deg);
+}
+.day-routine-wrapper > p:nth-of-type(10) {
+  transform: translate(122px, 213px) rotate(150deg);
+}
+.day-routine-wrapper > p:nth-of-type(11) {
+  transform: translate(63px, 237px) rotate(165deg);
+}
+.day-routine-wrapper > p:nth-of-type(12) {
+  transform: translate(0, 246px) rotate(180deg);
+}
+.day-routine-wrapper > p:nth-of-type(13) {
+  transform: translate(-63px, 237px) rotate(195deg);
+}
+.day-routine-wrapper > p:nth-of-type(14) {
+  transform: translate(-122px, 213px) rotate(210deg);
+}
+.day-routine-wrapper > p:nth-of-type(15) {
+  transform: translate(-173px, 173px) rotate(225deg);
+}
+.day-routine-wrapper > p:nth-of-type(16) {
+  transform: translate(-213px, 123px) rotate(240deg);
+}
+.day-routine-wrapper > p:nth-of-type(17) {
+  transform: translate(-237px, 63px) rotate(255deg);
+}
+.day-routine-wrapper > p:nth-of-type(18) {
+  transform: translate(-246px, 0) rotate(270deg);
+}
+.day-routine-wrapper > p:nth-of-type(19) {
+  transform: translate(-237px, -63px) rotate(285deg);
+}
+.day-routine-wrapper > p:nth-of-type(20) {
+  transform: translate(-213px, -123px) rotate(300deg);
+}
+.day-routine-wrapper > p:nth-of-type(21) {
+  transform: translate(-173px, -173px) rotate(315deg);
+}
+.day-routine-wrapper > p:nth-of-type(22) {
+  transform: translate(-122px, -213px) rotate(330deg);
+}
+.day-routine-wrapper > p:nth-of-type(23) {
+  transform: translate(-63px, -237px) rotate(345deg);
+}
+.day-routine-wrapper > p:nth-of-type(24) {
+  transform: translate(4px, -246px);
+}
+
+.add-btn-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.add-btn-job {
+  width:7rem;
+  margin-top: 1rem;
+  margin-right: 1rem;
+  background-color: rgb(46, 144, 245);
+  border: 1px solid rgb(46, 144, 245);
+  border-color: rgb(46, 144, 245);
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.add-btn-job:hover {
+  background-color: rgb(46, 144, 245);
+  border-color: rgb(46, 144, 245);
+}

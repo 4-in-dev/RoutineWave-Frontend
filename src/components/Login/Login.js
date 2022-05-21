@@ -1,14 +1,23 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 import useInput from "../../hooks/use-input";
 
 import classes from "./Login.module.css";
-import logo from '../../assets/logo-small.png'
+import logo from "../../assets/logo-small.png";
+import { authActions } from "../../store/auth";
+import styled from 'styled-components';
 
 const isEmail = (value) => value.includes("@");
 const isNotEmpty = (value) => value.trim() !== "";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const [cookies, setCookie, removeCookie] = useCookies();
+  const navigate = useNavigate();
+
   const {
     value: emailValue,
     isValid: emailIsValid,
@@ -40,9 +49,12 @@ const Login = () => {
       return;
     }
 
-    const serverUrl = process.env.REACT_APP_SERVER_URL;
+    const serverUrl = process.env.REACT_APP_SERVER_URL + "login/";
     const reqData = {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         email: emailValue,
         password: pwValue,
@@ -50,9 +62,19 @@ const Login = () => {
     };
     try {
       const response = await fetch(serverUrl, reqData);
-      console.log('response', response)
+      const responseData = await response.json();
+
+      // 로그인 요청 결과: 이메일, 패스워드가 잘못된 경우
+      if (responseData.non_field_errors) {
+        alert("이메일과 패스워드를 확인해주세요.");
+        return;
+      }
+      // access Token
+      setCookie("is_login", responseData.access_token);
+      dispatch(authActions.login(responseData));
+      navigate('/main');
     } catch (error) {
-      alert('서버 요청 실패. 관리자에게 문의 해주세요.')
+      alert("로그인 실패. 관리자에게 문의 해주세요.");
       return;
     }
 
@@ -62,7 +84,9 @@ const Login = () => {
 
   return (
     <section>
-      <div><img src={logo} alt='logo' /></div>
+      <div>
+        <img src={logo} alt="logo" />
+      </div>
       <form onSubmit={submitHandler}>
         <div className={classes["form-control"]}>
           <label htmlFor="email">Email</label>
@@ -88,7 +112,7 @@ const Login = () => {
           {pwHasError && <p className={classes["error-text"]}>비밀번호를 입력해주세요.</p>}
         </div>
         <div className={classes["button-wrapper"]}>
-          <button>Login</button>
+          <CustomButton>Login</CustomButton>
         </div>
         <div className={classes["link-wrapper"]}>
           <Link className={classes["a-style"]} to="/signup">
@@ -99,5 +123,22 @@ const Login = () => {
     </section>
   );
 };
+
+const CustomButton = styled.button`
+  font: inherit;
+  background-color: #240370;
+  color: white;
+  border: 1px solid #240370;
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
+  width: 20rem;
+  cursor: pointer;
+
+  &:hover,
+  &:active {
+    background-color: #33059e;
+    border-color: #33059e;
+  }
+`
 
 export default Login;
