@@ -1,16 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import moment from "moment";
-import { removeElementFromArray, updateElementFromArray, jobToDayRoutine } from "../lib/util";
+import {
+  removeElementFromArray,
+  updateElementFromArray,
+  jobToDayRoutine,
+  loadJobServer2Chart,
+} from "../lib/util";
 
 const addAndGetSeries = (state, action) => {
   const registeredJob = action.payload;
 
   const content = registeredJob.content;
-  const startTime = registeredJob.start_time.split(':').splice(0,2).join('');
+  const startTime = registeredJob.start_time.split(":").splice(0, 2).join("");
   const id = registeredJob.id;
   const isFinished = registeredJob.is_finished;
-  
+
   let jobs = [...state.jobs, [content, Number(startTime), id, isFinished]];
   state.jobs = jobs;
 
@@ -19,10 +24,10 @@ const addAndGetSeries = (state, action) => {
 
 const getStartEndAngle = (state) => {
   if (state.jobs.length === 0) return;
-  
+
   const startTime = state.jobs[0][1];
   const startAngle = Math.floor(startTime / 100) + (startTime % 100 > 0 ? 0.5 : 0);
-  
+
   return {
     start: 15 * startAngle,
     end: 360 + 15 * startAngle,
@@ -75,6 +80,11 @@ const jobSlice = createSlice({
     },
     updateJob(state, action) {
       state.jobs = updateElementFromArray(state.jobs, action.payload);
+      state.series = jobToDayRoutine(state.jobs);
+      state.angleRange = getStartEndAngle(state);
+    },
+    loadAllJob(state, action) {
+      state.jobs = loadJobServer2Chart(action.payload);
       state.series = jobToDayRoutine(state.jobs);
       state.angleRange = getStartEndAngle(state);
     },

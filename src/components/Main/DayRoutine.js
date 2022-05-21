@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { getSeriesData, getRoutineTableOptions } from "./MyRoutineHelper";
 import { jobActions } from "../../store/job";
-import { reqDeleteJob } from "../../lib/request-schedule";
+import { reqDeleteJob, reqDayJob } from "../../lib/request-schedule";
 
 import { PieChart } from "@toast-ui/react-chart";
 import { useCookies } from "react-cookie";
@@ -41,7 +41,14 @@ const DayRoutine = () => {
     numArr[23] = 0;
     setHourText(numArr);
 
-    // API 호출 (해당 날짜 전체 일과)
+    // API 호출 (해당 날짜 전체 일정)
+    const fetchDayJob = async () => {
+      const jobData = await reqDayJob(currDate, cookies.is_login);
+      dispatch(jobActions.loadAllJob(jobData));
+      reRenderAndDestroyPreviousChart();
+    }
+    
+    fetchDayJob();
   }, []);
 
   const showAddRountineHandler = () => {

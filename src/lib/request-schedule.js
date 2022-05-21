@@ -15,3 +15,23 @@ export const reqDeleteJob = async (jobId, accessToken) => {
     return false;
   }
 };
+
+
+export const reqDayJob = async (targetDay, accessToken) => {
+  const serverUrl = `/api/schedule?day=${targetDay}`;
+  const reqData = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${accessToken}`
+    },
+  };
+  try {
+    const response = await fetch(serverUrl, reqData);
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.log(error.message);
+    return null;
+  }
+};

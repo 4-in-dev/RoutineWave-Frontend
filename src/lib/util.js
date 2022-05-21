@@ -42,3 +42,13 @@ export const jobToDayRoutine = (jobs) => {
   }
   return series;
 };
+
+export const loadJobServer2Chart = (allJob) => {
+  return allJob.map(job => {
+    let content = job.content;
+    let startTime = job.start_time.split(":").splice(0, 2).join("");
+    let id = job.id;
+    let isFinished = job.is_finished;
+    return [content, Number(startTime), id, isFinished];
+  })
+}
