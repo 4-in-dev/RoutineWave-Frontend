@@ -11,12 +11,14 @@ import { jobActions } from "../../store/job";
 import { getHHmmFormat } from "../../lib/util";
 import classes from "./DayRoutineMaker.module.css";
 import * as CONSTANT from '../../lib/constants'
+import { useCookies } from "react-cookie";
 
 const DayRoutineUpdater = (props) => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.job.currItem.data);
   const currDate = useSelector((state) => state.job.date);
   const isFinish = useSelector((state) => state.job.currItem.data.isFinish);
+  const [cookies, setCookie, removeCookie] = useCookies(["is_login"]);
 
   useEffect(() => {
     dispatch(jobActions.setContent(props.selectedJob[CONSTANT.INDEX_OF_CONTENT]));
@@ -42,13 +44,15 @@ const DayRoutineUpdater = (props) => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${cookies.is_login}`,
       },
       body: JSON.stringify({
-        schedule_date: `${currDate}T00:00`,
         content: data.content,
         is_finished: data.isFinish,
-        start_time: `${currDate}T${getHHmmFormat(String(data.startTime))}`,
-        end_time: `${currDate}T00:00`,
+        start_date: currDate,
+        start_time: `${getHHmmFormat(String(data.startTime))}`,
+        end_date: currDate,
+        end_time: "00:00",
       }),
     };
     try {

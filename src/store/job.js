@@ -7,10 +7,10 @@ const addAndGetSeries = (state, action) => {
   const registeredJob = action.payload;
 
   const content = registeredJob.content;
-  const startTime = moment(registeredJob.start_time).format('HHmm');
+  const startTime = registeredJob.start_time.split(':').splice(0,2).join('');
   const id = registeredJob.id;
   const isFinished = registeredJob.is_finished;
-
+  
   let jobs = [...state.jobs, [content, Number(startTime), id, isFinished]];
   state.jobs = jobs;
 

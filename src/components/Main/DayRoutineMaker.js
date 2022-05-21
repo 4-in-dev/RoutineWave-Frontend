@@ -9,9 +9,11 @@ import TimePicker from "rc-time-picker";
 
 import { jobActions } from "../../store/job";
 import { getHHmmFormat } from "../../lib/util";
+import { useCookies } from "react-cookie";
 import classes from "./DayRoutineMaker.module.css";
 
 const DayRoutineMaker = (props) => {
+  const [cookies, setCookie, removeCookie] = useCookies(["is_login"]);
   const dispatch = useDispatch();
   const data = useSelector((state) => state.job.currItem.data);
   const currDate = useSelector((state) => state.job.date);
@@ -37,14 +39,16 @@ const DayRoutineMaker = (props) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${cookies.is_login}`
       },
       body: JSON.stringify({
         writer: auth.user.pk,
-        schedule_date: `${currDate}T00:00`,
         content: data.content,
         is_finished: data.isFinish,
-        start_time: `${currDate}T${getHHmmFormat(data.startTime)}`,
-        end_time: `${currDate}T00:00`,
+        start_date: currDate,
+        start_time: `${getHHmmFormat(data.startTime)}`,
+        end_date: currDate,
+        end_time: "00:00",
       }),
     };
     try {

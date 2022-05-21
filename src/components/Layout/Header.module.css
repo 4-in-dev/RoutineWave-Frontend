@@ -7,6 +7,7 @@
   z-index: 10;
 
   border-bottom: 3px solid rgb(249, 249, 251);
+  background-color: white;
   
   display: flex;
   align-items: center;

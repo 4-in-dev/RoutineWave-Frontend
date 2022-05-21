@@ -12,7 +12,7 @@ export const removeElementFromArray = (arr, index) => {
 
 export const updateElementFromArray = (arr, selectedJob) => {
   arr[selectedJob.seriesId][CONSTANT.INDEX_OF_CONTENT] = selectedJob.data.content;
-  arr[selectedJob.seriesId][CONSTANT.INDEX_OF_STARTTIME] = Number(moment(selectedJob.data.start_time).format("HHmm"));
+  arr[selectedJob.seriesId][CONSTANT.INDEX_OF_STARTTIME] = selectedJob.data.start_time.split(':').splice(0,2).join('');
   arr[selectedJob.seriesId][CONSTANT.INDEX_OF_IS_FINISH] = selectedJob.data.is_finished;
 
   return arr;

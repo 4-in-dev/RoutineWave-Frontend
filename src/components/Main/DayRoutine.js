@@ -6,6 +6,7 @@ import { jobActions } from "../../store/job";
 import { reqDeleteJob } from "../../lib/request-schedule";
 
 import { PieChart } from "@toast-ui/react-chart";
+import { useCookies } from "react-cookie";
 
 import "./DayRoutine.css";
 import Modal from "../UI/Modal";
@@ -31,6 +32,7 @@ const DayRoutine = () => {
   const myRountineStartAngle = useSelector((state) => state.job.angleRange);
   const data = getSeriesData(myRountineSeries);
   const options = getRoutineTableOptions(myRountineStartAngle);
+  const [cookies, setCookie, removeCookie] = useCookies(["is_login"]);
 
   const chartRef = useRef(null);
 
@@ -70,7 +72,7 @@ const DayRoutine = () => {
     const isOkayForRemove = window.confirm("이 일정을 삭제하시겠습니까?");
     if (isOkayForRemove) {
       try {
-        const resultDelete = await reqDeleteJob(entireJobs[selectedJob][JOB_ID_INDEX]);
+        const resultDelete = await reqDeleteJob(entireJobs[selectedJob][JOB_ID_INDEX], cookies.is_login);
         if (!resultDelete) throw new Error("Delete job fail");
         dispatch(jobActions.removeJob(selectedJob));
         reRenderAndDestroyPreviousChart();
