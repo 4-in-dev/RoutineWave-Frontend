@@ -1,5 +1,5 @@
 export const reqDeleteJob = async (jobId, accessToken) => {
-  const serverUrl = `${process.env.REACT_APP_SERVER_URL}api/schedule/${jobId}/`;
+  const serverUrl = `${process.env.REACT_APP_SERVER_URL}/api/schedule/${jobId}/`;
   const reqData = {
     method: "DELETE",
     headers: {
@@ -18,7 +18,7 @@ export const reqDeleteJob = async (jobId, accessToken) => {
 
 
 export const reqDayJob = async (targetDay, accessToken) => {
-  const serverUrl = `/api/schedule?day=${targetDay}`;
+  const serverUrl = `${process.env.REACT_APP_SERVER_URL}/api/schedule?day=${targetDay}`;
   const reqData = {
     method: "GET",
     headers: {
@@ -37,7 +37,7 @@ export const reqDayJob = async (targetDay, accessToken) => {
 };
 
 export const reqMonthJob = async (targetMonth, accessToken) => {
-  const serverUrl = `/api/schedule?month=${targetMonth}`;
+  const serverUrl = `${process.env.REACT_APP_SERVER_URL}/api/schedule?month=${targetMonth}`;
   const reqData = {
     method: "GET",
     headers: {
