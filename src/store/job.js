@@ -1,13 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import moment from "moment";
-import { removeElementFromArray, updateElementFromArray, jobToDayRoutine } from "../lib/util";
+import {
+  removeElementFromArray,
+  updateElementFromArray,
+  jobToDayRoutine,
+  loadJobServer2Chart,
+} from "../lib/util";
 
 const addAndGetSeries = (state, action) => {
   const registeredJob = action.payload;
 
   const content = registeredJob.content;
-  const startTime = moment(registeredJob.start_time).format('HHmm');
+  const startTime = registeredJob.start_time.split(":").splice(0, 2).join("");
   const id = registeredJob.id;
   const isFinished = registeredJob.is_finished;
 
@@ -19,10 +24,10 @@ const addAndGetSeries = (state, action) => {
 
 const getStartEndAngle = (state) => {
   if (state.jobs.length === 0) return;
-  
+
   const startTime = state.jobs[0][1];
   const startAngle = Math.floor(startTime / 100) + (startTime % 100 > 0 ? 0.5 : 0);
-  
+
   return {
     start: 15 * startAngle,
     end: 360 + 15 * startAngle,
@@ -31,7 +36,6 @@ const getStartEndAngle = (state) => {
 
 const initialJobState = {
   currItem: {
-    id: 0,
     data: {
       content: "",
       isFinish: false,
@@ -41,8 +45,10 @@ const initialJobState = {
   },
   series: [],
   jobs: [],
+  jobsOfMonth: [],
   angleRange: { start: 0, end: 360 },
   date: moment().format("YYYY-MM-DD"),
+  currMonth: moment().format("YYYY-MM")
 };
 
 const jobSlice = createSlice({
@@ -68,6 +74,9 @@ const jobSlice = createSlice({
     setCurrDate(state, action) {
       state.date = action.payload;
     },
+    setCurrMonth(state, action) {
+      state.currMonth = action.payload
+    },
     removeJob(state, action) {
       state.jobs = removeElementFromArray(state.jobs, action.payload);
       state.series = jobToDayRoutine(state.jobs);
@@ -78,6 +87,14 @@ const jobSlice = createSlice({
       state.series = jobToDayRoutine(state.jobs);
       state.angleRange = getStartEndAngle(state);
     },
+    loadAllJob(state, action) {
+      state.jobs = loadJobServer2Chart(action.payload);
+      state.series = jobToDayRoutine(state.jobs);
+      state.angleRange = getStartEndAngle(state);
+    },
+    setJobListOfMonth(state, action){
+      state.jobsOfMonth = action.payload
+    }
   },
 });
 
