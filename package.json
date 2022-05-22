@@ -1,6 +1,6 @@
 {
   "name": "routinesurfer",
-  "proxy": "http://localhost:3001",
+  "proxy": "http://routinewave-dev.ap-northeast-2.elasticbeanstalk.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
