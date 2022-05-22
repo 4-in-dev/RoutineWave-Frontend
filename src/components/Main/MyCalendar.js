@@ -9,11 +9,13 @@ import styled from "styled-components";
 import "./MyCalendar.css";
 
 import { jobActions } from "../../store/job";
-import { reqDayJob } from "../../lib/request-schedule";
+import { reqDayJob, reqMonthJob } from "../../lib/request-schedule";
+import { getJobsDateForMonth } from "../../lib/util"
 
 const MyCalendar = () => {
   const dispatch = useDispatch();
   const [currCalendarDate, setCurrCalendarDate] = useState(new Date());
+  const [currCalendarMonth, setCurrCalendarMonth] = useState();
   const [cookies, setCookie, removeCookie] = useCookies(["is_login"]);
   const jobsOfMonth = useSelector((state) => state.job.jobsOfMonth);
 
@@ -26,11 +28,22 @@ const MyCalendar = () => {
     dispatch(jobActions.loadAllJob(jobData));
   };
 
+  const clickedMonthHandler = async (e) => {
+    const currMonth = moment(e.activeStartDate).format('YYYY-MM')
+    dispatch(jobActions.setCurrMonth(currMonth))
+    
+    // 현재 달 일정 가져오기
+    const jobDataOfMonth = await reqMonthJob(currMonth, cookies.is_login);
+    const dateListOfMonth = getJobsDateForMonth(jobDataOfMonth);
+    dispatch(jobActions.setJobListOfMonth(dateListOfMonth));
+  }
+
   return (
     <CalendarWrapper>
       <h1>CALENDAR</h1>
       <Calendar
         onChange={dateChangeHandler}
+        onActiveStartDateChange={clickedMonthHandler}
         value={currCalendarDate}
         tileContent={({ date, view }) => {
           if (jobsOfMonth.find((x) => x === moment(date).format("YYYY-MM-DD"))) {
