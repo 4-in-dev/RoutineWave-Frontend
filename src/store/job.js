@@ -36,7 +36,6 @@ const getStartEndAngle = (state) => {
 
 const initialJobState = {
   currItem: {
-    id: 0,
     data: {
       content: "",
       isFinish: false,
@@ -46,8 +45,10 @@ const initialJobState = {
   },
   series: [],
   jobs: [],
+  jobsOfMonth: [],
   angleRange: { start: 0, end: 360 },
   date: moment().format("YYYY-MM-DD"),
+  currMonth: moment().format("YYYY-MM")
 };
 
 const jobSlice = createSlice({
@@ -73,6 +74,9 @@ const jobSlice = createSlice({
     setCurrDate(state, action) {
       state.date = action.payload;
     },
+    setCurrMonth(state, action) {
+      state.currMonth = action.payload
+    },
     removeJob(state, action) {
       state.jobs = removeElementFromArray(state.jobs, action.payload);
       state.series = jobToDayRoutine(state.jobs);
@@ -88,6 +92,9 @@ const jobSlice = createSlice({
       state.series = jobToDayRoutine(state.jobs);
       state.angleRange = getStartEndAngle(state);
     },
+    setJobListOfMonth(state, action){
+      state.jobsOfMonth = action.payload
+    }
   },
 });
 

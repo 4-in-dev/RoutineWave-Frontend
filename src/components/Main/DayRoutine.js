@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { getSeriesData, getRoutineTableOptions } from "./MyRoutineHelper";
 import { jobActions } from "../../store/job";
-import { reqDeleteJob, reqDayJob } from "../../lib/request-schedule";
+import { reqDeleteJob, reqDayJob, reqMonthJob } from "../../lib/request-schedule";
+import { getJobsDateForMonth } from "../../lib/util"
 
 import { PieChart } from "@toast-ui/react-chart";
 import { useCookies } from "react-cookie";
@@ -28,6 +29,7 @@ const DayRoutine = () => {
 
   const entireJobs = useSelector((state) => state.job.jobs);
   const currDate = useSelector((state) => state.job.date);
+  const currMonth = useSelector((state) => state.job.currMonth);
   const myRountineSeries = useSelector((state) => state.job.series);
   const myRountineStartAngle = useSelector((state) => state.job.angleRange);
   const data = getSeriesData(myRountineSeries);
@@ -41,6 +43,13 @@ const DayRoutine = () => {
     numArr[23] = 0;
     setHourText(numArr);
 
+    // API 호출 (해당 월 전체 일정)
+    const fetchMonthJob = async () => {
+      const jobDataOfMonth = await reqMonthJob(currMonth, cookies.is_login);
+      const dateListOfMonth = getJobsDateForMonth(jobDataOfMonth);
+      dispatch(jobActions.setJobListOfMonth(dateListOfMonth));
+    }
+
     // API 호출 (해당 날짜 전체 일정)
     const fetchDayJob = async () => {
       const jobData = await reqDayJob(currDate, cookies.is_login);
@@ -48,9 +57,11 @@ const DayRoutine = () => {
       reRenderAndDestroyPreviousChart();
     }
     
+    fetchMonthJob();
     fetchDayJob();
   }, []);
 
+  // 파이차트 각도 변화가 일어나면 차트 다시 그려주기
   useEffect(() => {
     if (chartReRenderHelper.length > 1 ){
       reRenderAndDestroyPreviousChart();
