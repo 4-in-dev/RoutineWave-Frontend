@@ -48,7 +48,8 @@ const initialJobState = {
   jobsOfMonth: [],
   angleRange: { start: 0, end: 360 },
   date: moment().format("YYYY-MM-DD"),
-  currMonth: moment().format("YYYY-MM")
+  currMonth: moment().format("YYYY-MM"),
+  isDateChange: false
 };
 
 const jobSlice = createSlice({
@@ -76,6 +77,9 @@ const jobSlice = createSlice({
     },
     setCurrMonth(state, action) {
       state.currMonth = action.payload
+    },
+    setIsDateChange(state, action) {
+      state.isDateChange = action.payload
     },
     removeJob(state, action) {
       state.jobs = removeElementFromArray(state.jobs, action.payload);

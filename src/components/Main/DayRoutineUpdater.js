@@ -39,12 +39,13 @@ const DayRoutineUpdater = (props) => {
   };
 
   const reqUpdateJob = async () => {
-    const serverUrl = `${process.env.REACT_APP_SERVER_URL}api/schedule/${props.selectedJob[CONSTANT.INDEX_OF_JOB]}/`;
+    const serverUrl = `/api/schedule/${props.selectedJob[CONSTANT.INDEX_OF_JOB]}/`;
     const reqData = {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${cookies.is_login}`,
+        "X-CSRFToken": cookies.csrftoken
       },
       body: JSON.stringify({
         content: data.content,
