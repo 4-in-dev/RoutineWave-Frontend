@@ -15,11 +15,11 @@ import { getJobsDateForMonth } from "../../lib/util"
 const MyCalendar = () => {
   const dispatch = useDispatch();
   const [currCalendarDate, setCurrCalendarDate] = useState(new Date());
-  const [currCalendarMonth, setCurrCalendarMonth] = useState();
   const [cookies, setCookie, removeCookie] = useCookies(["is_login"]);
   const jobsOfMonth = useSelector((state) => state.job.jobsOfMonth);
 
   const dateChangeHandler = async (value, event) => {
+    dispatch(jobActions.setIsDateChange(true));
     const currDate = moment(value).format("YYYY-MM-DD");
     setCurrCalendarDate(value);
     dispatch(jobActions.setCurrDate(currDate));

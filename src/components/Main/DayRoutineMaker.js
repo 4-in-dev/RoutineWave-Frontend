@@ -17,6 +17,7 @@ const DayRoutineMaker = (props) => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.job.currItem.data);
   const currDate = useSelector((state) => state.job.date);
+  const jobsOfMonth = useSelector((state) => state.job.jobsOfMonth);
   const isFinish = useSelector((state) => state.job.currItem.data.isFinish);
   const savedJobs = useSelector((state) => state.job.jobs);
   const auth = useSelector((state) => state.auth);
@@ -39,7 +40,8 @@ const DayRoutineMaker = (props) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${cookies.is_login}`
+        "Authorization": `Bearer ${cookies.is_login}`,
+        "X-CSRFToken": cookies.csrftoken
       },
       body: JSON.stringify({
         writer: auth.user.pk,
@@ -87,7 +89,10 @@ const DayRoutineMaker = (props) => {
       alert('일정 저장에 실패 하였습니다.');
       return;
     } 
-    
+
+    // 추가 후 캘린더 표시
+    dispatch(jobActions.setJobListOfMonth([...jobsOfMonth, currDate]));
+
     // 일정 저장 후 정리
     props.onClose();
     dispatch(jobActions.setContent(""));

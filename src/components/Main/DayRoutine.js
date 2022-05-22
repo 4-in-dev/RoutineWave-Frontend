@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getSeriesData, getRoutineTableOptions } from "./MyRoutineHelper";
 import { jobActions } from "../../store/job";
 import { reqDeleteJob, reqDayJob, reqMonthJob } from "../../lib/request-schedule";
-import { getJobsDateForMonth } from "../../lib/util"
+import { getJobsDateForMonth } from "../../lib/util";
 
 import { PieChart } from "@toast-ui/react-chart";
 import { useCookies } from "react-cookie";
@@ -32,6 +32,8 @@ const DayRoutine = () => {
   const currMonth = useSelector((state) => state.job.currMonth);
   const myRountineSeries = useSelector((state) => state.job.series);
   const myRountineStartAngle = useSelector((state) => state.job.angleRange);
+  const jobsOfMonth = useSelector((state) => state.job.jobsOfMonth);
+  const isDateChange = useSelector((state) => state.job.isDateChange);
   const data = getSeriesData(myRountineSeries);
   const options = getRoutineTableOptions(myRountineStartAngle);
   const [cookies, setCookie, removeCookie] = useCookies(["is_login"]);
@@ -48,23 +50,24 @@ const DayRoutine = () => {
       const jobDataOfMonth = await reqMonthJob(currMonth, cookies.is_login);
       const dateListOfMonth = getJobsDateForMonth(jobDataOfMonth);
       dispatch(jobActions.setJobListOfMonth(dateListOfMonth));
-    }
+    };
 
     // API 호출 (해당 날짜 전체 일정)
     const fetchDayJob = async () => {
       const jobData = await reqDayJob(currDate, cookies.is_login);
       dispatch(jobActions.loadAllJob(jobData));
       reRenderAndDestroyPreviousChart();
-    }
-    
+    };
+
     fetchMonthJob();
     fetchDayJob();
   }, []);
 
   // 파이차트 각도 변화가 일어나면 차트 다시 그려주기
   useEffect(() => {
-    if (chartReRenderHelper.length > 1 ){
+    if (isDateChange) {
       reRenderAndDestroyPreviousChart();
+      dispatch(jobActions.setIsDateChange(false));
     }
   }, [myRountineStartAngle]);
 
@@ -96,9 +99,18 @@ const DayRoutine = () => {
     const isOkayForRemove = window.confirm("이 일정을 삭제하시겠습니까?");
     if (isOkayForRemove) {
       try {
-        const resultDelete = await reqDeleteJob(entireJobs[selectedJob][JOB_ID_INDEX], cookies.is_login);
+        const resultDelete = await reqDeleteJob(entireJobs[selectedJob][JOB_ID_INDEX], cookies);
         if (!resultDelete) throw new Error("Delete job fail");
         dispatch(jobActions.removeJob(selectedJob));
+
+        // 남은 일정이 없다면... 달력에서도 삭제
+        if (entireJobs.length === 1) {
+          const targetDateIndex = jobsOfMonth.indexOf(currDate);
+          const tmpJobOfMonth = [...jobsOfMonth];
+          tmpJobOfMonth.splice(targetDateIndex);
+          dispatch(jobActions.setJobListOfMonth(tmpJobOfMonth));
+        }
+
         reRenderAndDestroyPreviousChart();
       } catch (error) {
         console.log(error.message);
