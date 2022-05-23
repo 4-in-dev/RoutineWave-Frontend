@@ -43,7 +43,7 @@ export const reqDayJob = async (targetDay, accessToken) => {
 };
 
 export const reqMonthJob = async (targetMonth, accessToken) => {
-    const serverUrl = process.env.REACT_APP_SERVER_URL + `/api/schedule?month=${targetMonth}`;
+    const serverUrl = process.env.REACT_APP_SERVER_URL + `api/schedule?month=${targetMonth}`;
     const reqData = {
         method: "GET",
         headers: {
