@@ -7,7 +7,7 @@ export const reqDeleteJob = async (jobId, cookies) => {
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${cookies.is_login}`,
-            "Access-Control-Allow-Origin": '*',
+            // "Access-Control-Allow-Origin": '*',
             "X-CSRFToken": cookies.csrftoken
         },
     };
@@ -29,7 +29,7 @@ export const reqDayJob = async (targetDay, accessToken) => {
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${accessToken}`,
-            "Access-Control-Allow-Origin": '*'
+            // "Access-Control-Allow-Origin": '*'
         },
     };
     try {
@@ -49,7 +49,7 @@ export const reqMonthJob = async (targetMonth, accessToken) => {
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${accessToken}`,
-            "Access-Control-Allow-Origin": '*'
+            // "Access-Control-Allow-Origin": '*'
         },
     };
     try {
