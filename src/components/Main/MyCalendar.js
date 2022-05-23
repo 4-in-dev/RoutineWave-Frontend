@@ -42,6 +42,7 @@ const MyCalendar = () => {
     <CalendarWrapper>
       <h1>CALENDAR</h1>
       <Calendar
+        locale="en"
         onChange={dateChangeHandler}
         onActiveStartDateChange={clickedMonthHandler}
         value={currCalendarDate}
