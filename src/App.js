@@ -5,19 +5,24 @@ import {
 } from "react-router-dom";
 
 import './App.css';
-import Header from './components/Header'
+import './Landing.css';
+// import Header from './components/LandingHeader'
 import NotesListPage from './pages/NotesListPage'
 import NotePage from './pages/NotePage'
+import Landing from "./pages/Landing";
+import Mypage from "./pages/Mypage";
 
 function App() {
     return (
         <Router>
             <div className="container dark">
                 <div className="app">
-                    <Header/>
+                    {/*<Header/>*/}
                     <Routes>
                         <Route path="/" element={<NotesListPage/>}/>
                         <Route path="/note/:id" element={<NotePage/>}/>
+                        <Route path="/landing" element={<Landing/>}/>
+                        <Route path="/:id" element={<Mypage/>}/>
                     </Routes>
                 </div>
             </div>

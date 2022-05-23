@@ -1,55 +1,55 @@
-@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap');*/
 
 
 
-:root {
-  --color-main: #f68657;
-  --color-text: #383a3f;
-  --color-dark: #1f2124;
-  --color-gray: #677;
-  --color-bg: #f3f6f9;
-  --color-light: #acb4bd;
-  --color-lighter: #f9f9f9;
-  --color-white: #fff;
-  --color-border:#e0e3e6;
-}
+/*:root {*/
+/*  --color-main: #f68657;*/
+/*  --color-text: #383a3f;*/
+/*  --color-dark: #1f2124;*/
+/*  --color-gray: #677;*/
+/*  --color-bg: #f3f6f9;*/
+/*  --color-light: #acb4bd;*/
+/*  --color-lighter: #f9f9f9;*/
+/*  --color-white: #fff;*/
+/*  --color-border:#e0e3e6;*/
+/*}*/
 
-.dark {
-  --color-main: #f68657;
-  --color-text: #d6d1d1;
-  --color-dark: #f5f6f7;
-  --color-gray: #999;
-  --color-bg: #1f2124;
-  --color-lighter: #292a2c;
-  --color-white: #2e3235;
-  --color-border:#252629;
-}
+/*.dark {*/
+/*  --color-main: #f68657;*/
+/*  --color-text: #d6d1d1;*/
+/*  --color-dark: #f5f6f7;*/
+/*  --color-gray: #999;*/
+/*  --color-bg: #1f2124;*/
+/*  --color-lighter: #292a2c;*/
+/*  --color-white: #2e3235;*/
+/*  --color-border:#252629;*/
+/*}*/
 
-/* BASE STYLES */
-
-
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Lexend', sans-serif;
-  color: inherit;
-  font-size: inherit;
-  scroll-behavior: smooth;
-}
+/*!* BASE STYLES *!*/
 
 
-body{
-  line-height: 1.8em;
-  font-weight: 400;
-  font-size: 16px;
-}
+/**{*/
+/*  margin: 0;*/
+/*  padding: 0;*/
+/*  box-sizing: border-box;*/
+/*  font-family: 'Lexend', sans-serif;*/
+/*  color: inherit;*/
+/*  font-size: inherit;*/
+/*  scroll-behavior: smooth;*/
+/*}*/
 
-a {
-  text-decoration: none;
-}
 
-/* APP STYLES */
+/*body{*/
+/*  line-height: 1.8em;*/
+/*  font-weight: 400;*/
+/*  font-size: 16px;*/
+/*}*/
+
+/*a {*/
+/*  text-decoration: none;*/
+/*}*/
+
+/*!* APP STYLES *!*/
 
 
 .container {
@@ -64,7 +64,6 @@ a {
 
 .app {
   width: 100%;
-  max-width: 480px;
   height: 88vh;
   margin: 0 auto;
   background-color: var(--color-white);
@@ -79,7 +78,7 @@ a {
   padding: 16px;
   justify-content: space-between;
   background-color: var(--color-lighter);
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .app-header h1 {
