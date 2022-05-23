@@ -47,7 +47,7 @@ function Navbar() {
                           <Link to="/main">schedule</Link>
                         </li>
                         <li>
-                            <Link to="/main">mypage</Link>
+                            <Link to="/mypage">mypage</Link>
                         </li>
                         <li>
                           <Link to="/logout">sign out</Link>

@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "./Navbar";
+import { Link } from "react-router-dom";
 
 function LandingHeader() {
     return (
@@ -10,7 +11,7 @@ function LandingHeader() {
                 <p className="details">
                     You can create and run routines. Check your achievement and draw a growth curve. You can also save and recall routines. Check in what direction
                 </p>
-            <a href="#" className="cv-btn">go to login</a>
+            <Link to="/login"><a href="#" className="cv-btn">go to login</a></Link>
             </div>
 
         </div>

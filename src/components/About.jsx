@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 
 function About(props) {
     return (
@@ -10,7 +10,7 @@ function About(props) {
             <div className="about-text">
                 <h2> {props.title} </h2>
                 <p>{props.desc}</p>
-                <button> {props.button} </button>
+                <Link to="/main"><button> {props.button} </button></Link>
             </div>
 
         </div>

@@ -52,7 +52,7 @@ function App() {
               <Route path="/logout" element={<LogoutPage />} />
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/" element={<Landing/>}/>
-              <Route path="/:id" element={<Mypage/>}/>
+              <Route path="/mypage" element={<Mypage/>}/>
               {isAuth ? (
                 <>
                   <Route path="/login" element={<Navigate replace to="/main" />} />

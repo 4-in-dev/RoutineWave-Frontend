@@ -10,17 +10,17 @@ import '../Landing.css';
 
 function Mypage() {
   return (
-    <div id="main">
+    <div id="mypage">
         <Navbar />
-        <div className="container">
-        <div id="left-wrapper">
-            <Profile/>
-        </div>
-        <div id="right-wrapper">
-            <RadarChart/>
-            <Area/>
-        </div>
-        </div>
+        {/*<div className="container">*/}
+        {/*<div id="left-wrapper">*/}
+        <Profile/>
+        {/*</div>*/}
+        {/*<div id="right-wrapper">*/}
+        {/*    <RadarChart/>*/}
+        {/*    <Area/>*/}
+        {/*</div>*/}
+        {/*</div>*/}
 
     </div>
   );
