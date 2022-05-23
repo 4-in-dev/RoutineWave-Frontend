@@ -1,5 +1,8 @@
+import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+import { authActions } from "./store/auth";
 
 import "./App.css";
 import HeaderExample from "./components/Header";
@@ -13,7 +16,17 @@ import Header from "./components/Layout/Header";
 
 function App() {
   const isExample = false;
+  const dispatch = useDispatch();
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
+  const user = JSON.parse(window.localStorage.getItem("loginedUser"));
+
+  useEffect(() => {
+    // 로그인 유무
+    if (user !== null) {
+      dispatch(authActions.login(user));
+    }
+  });
+
   return (
     <Router>
       {isExample ? (
@@ -31,11 +44,19 @@ function App() {
           <Header />
           <main>
             <Routes>
-              <Route path="/login" element={<LoginPage />} />
               <Route path="/logout" element={<LogoutPage />} />
               <Route path="/signup" element={<SignupPage />} />
-              {isAuth && <Route path="/main" element={<MainPage />} />}
-              {!isAuth && <Route path="/main" element={<Navigate replace to='/login' />} />}
+              {isAuth ? (
+                <>
+                  <Route path="/login" element={<Navigate replace to="/main" />} />
+                  <Route path="/main" element={<MainPage />} />
+                </>
+              ) : (
+                <>
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/main" element={<Navigate replace to="/login" />} />
+                </>
+              )}
             </Routes>
           </main>
         </>

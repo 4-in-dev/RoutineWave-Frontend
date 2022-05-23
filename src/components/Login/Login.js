@@ -71,6 +71,7 @@ const Login = () => {
       }
       // access Token
       setCookie("is_login", responseData.access_token);
+      window.localStorage.setItem('loginedUser', JSON.stringify(responseData));
       dispatch(authActions.login(responseData));
       navigate('/main');
     } catch (error) {
