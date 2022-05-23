@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 
 import DayRoutine from "../../components/Main/DayRoutine";
 import MyCalendar from "../../components/Main/MyCalendar";
+import RoutineTemplate from "../../components/Main/RoutineTemplate/RoutineTemplate";
 
 import styled from "styled-components";
 
@@ -11,9 +12,12 @@ const MainPage = () => {
 
   return (
     <MainWrapper>
+      <UpperSection>
+        <RoutineTemplate />
         <InfoWrapper>
           <span>안녕하세요! {user.nickname} 님</span>
         </InfoWrapper>
+      </UpperSection>
       <RoutineWrapper>
         <DayRoutine />
         <MyCalendar />
@@ -27,8 +31,15 @@ const MainWrapper = styled.div`
   max-width: 980px;
 `
 
+const UpperSection = styled.div`
+  width:100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+`;
+
 const InfoWrapper = styled.div`
-  width: 100%;
+  width: 30%;
   display: flex;
   justify-content: right;
   margin-bottom: 1rem;

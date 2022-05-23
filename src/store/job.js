@@ -49,7 +49,7 @@ const initialJobState = {
   angleRange: { start: 0, end: 360 },
   date: moment().format("YYYY-MM-DD"),
   currMonth: moment().format("YYYY-MM"),
-  isDateChange: false
+  isDateChange: false,
 };
 
 const jobSlice = createSlice({
@@ -98,6 +98,10 @@ const jobSlice = createSlice({
     },
     setJobListOfMonth(state, action){
       state.jobsOfMonth = action.payload
+    },
+    adjustTplJob(state, action) {
+      state.series = jobToDayRoutine(action.payload);
+      state.angleRange = getStartEndAngle(state);
     }
   },
 });
