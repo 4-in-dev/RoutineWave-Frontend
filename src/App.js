@@ -2,8 +2,9 @@ import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { authActions } from "./store/auth";
 
+import { authActions } from "./store/auth";
+import './Landing.css';
 import "./App.css";
 import HeaderExample from "./components/Header";
 import NotesListPage from "./pages/NotesListPage";
@@ -13,6 +14,9 @@ import LogoutPage from "./pages/User/LogoutPage";
 import SignupPage from "./pages/User/SignupPage";
 import MainPage from "./pages/Main/MainPage";
 import Header from "./components/Layout/Header";
+import Landing from "./pages/Landing";
+import Mypage from "./pages/Mypage";
+import Navbar from "./components/Navbar";
 
 function App() {
   const isExample = false;
@@ -41,11 +45,14 @@ function App() {
         </div>
       ) : (
         <>
-          <Header />
+          {/*<Header />*/}
+          <Navbar />
           <main>
             <Routes>
               <Route path="/logout" element={<LogoutPage />} />
               <Route path="/signup" element={<SignupPage />} />
+              <Route path="/" element={<Landing/>}/>
+              <Route path="/:id" element={<Mypage/>}/>
               {isAuth ? (
                 <>
                   <Route path="/login" element={<Navigate replace to="/main" />} />
