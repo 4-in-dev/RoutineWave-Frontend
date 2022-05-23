@@ -4,7 +4,7 @@ import Navbar from "./Navbar";
 function LandingHeader() {
     return (
         <div id="main">
-            <Navbar />
+            {/*<Navbar />*/}
             <div className="name">
                 <h1><span>RoutineWave</span> will make you grow up.</h1>
                 <p className="details">
