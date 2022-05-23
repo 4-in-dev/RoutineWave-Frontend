@@ -1,5 +1,6 @@
 export const reqDeleteJob = async (jobId, cookies) => {
-  const serverUrl = `/api/schedule/${jobId}/`;
+  // const serverUrl = `/api/schedule/${jobId}/`;
+  const serverUrl = process.env.REACT_APP_SERVER_URL + "/api/schedule/${jobId}/";
   const reqData = {
     method: "DELETE",
     headers: {
