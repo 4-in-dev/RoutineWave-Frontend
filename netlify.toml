@@ -7,6 +7,11 @@
   REACT_APP_TOML_ENV_VAR = "From netlify.toml (REACT_APP_)"
 
 [[redirects]]
-  from ="api"
+  from ="/*api"
   to = "https://routinewave.link/:splat"
+  status = 200
+
+[[redirects]]
+  from ="/*"
+  to = "/index.html"
   status = 200
