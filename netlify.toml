@@ -2,11 +2,3 @@
   command = "npm run build"
   publish = "build"
 
-[context.production.environment]
-  TOML_ENV_VAR = "From netlify.toml"
-  REACT_APP_TOML_ENV_VAR = "From netlify.toml (REACT_APP_)"
-
-[[redirects]]
-  from ="api"
-  to = "https://routinewave.link/:splat"
-  status = 200
