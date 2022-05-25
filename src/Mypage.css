@@ -30,3 +30,9 @@ h3 {
     margin-top: 100px;
     color: #00b7ff;
 }
+
+.area, .radar {
+    margin: 100px 100px 0 300px;
+
+}
+

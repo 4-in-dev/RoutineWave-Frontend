@@ -1,27 +1,18 @@
-import React from 'react';
-import LandingHeader from "../components/LandingHeader";
-import aboutimage from "../assets/about.png";
+import React from "react";
 import Navbar from "../components/Navbar";
-import RadarChart from "../components/RadarChart";
 import Profile from "../components/Profile";
 import Area from "../components/AreaChart";
+import Radar from "../components/RadarChart";
 import '../Mypage.css';
 import '../Landing.css';
 
 function Mypage() {
-  return (
+    return (
     <div id="mypage">
         <Navbar />
-        {/*<div className="container">*/}
-        {/*<div id="left-wrapper">*/}
         <Profile/>
-        {/*</div>*/}
-        {/*<div id="right-wrapper">*/}
-        {/*    <RadarChart/>*/}
-        {/*    <Area/>*/}
-        {/*</div>*/}
-        {/*</div>*/}
-
+        <Area />
+        <Radar />
     </div>
   );
 }
