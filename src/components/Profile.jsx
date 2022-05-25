@@ -13,12 +13,7 @@ function Profile() {
       <img id="profile" src={profileimg} />
       <h5>안녕하세요. <span>{user.nickname}</span>님</h5>
       <h5><span>mail : </span>{user.email}</h5>
-      <button>회원정보수정</button>
-
-        <h3>my routine wave</h3>
-        <img src={achievement} />
-        <h3>my radar</h3>
-        <img src={radar} />
+      <button className="modify">회원정보수정</button>
     </div>
   );
 }

@@ -1,58 +1,54 @@
-// import React from 'react';
-// import Chart from '@toast-ui/chart';
-//
-// import AreaChart from '@toast-ui/chart/area';
-// import '@toast-ui/chart/dist/toastui-chart.min.css';
-//
-//
-// import { useRef } from 'react';
-//
-//
-// const el = document.getElementById('chart');
-// const data = {
-//   categories: ['Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-//   series: [
-//     {
-//       name: 'Budget',
-//       data: [5000, 3000, 5000, 7000, 6000, 4000, 1000],
-//     },
-//     {
-//       name: 'Income',
-//       data: [8000, 4000, 7000, 2000, 6000, 3000, 5000],
-//     },
-//   ],
-// };
-// const options = {
-//   chart: { width: 700, height: 400 },
-// };
-//
-// const chart = Chart.AreaChart({ el, data, options });
-//
-// function MyComponent() {
-//   const chartRef = useRef(null);
-//
-//   const handleClickButton = () => {
-//     console.log('type:', chartRef.current.getInstance().showSeriesDataLabel());
-//   };
-//
-//   return (
-//     <>
-//       <AreaChart ref={chartRef} data={data} options={options} />
-//       <button onClick={handleClickButton}>showSeriesDataLabel</button>
-//     </>
-//   );
-// }
-//
-//
-//
-//
-//
-// function Area() {
-//   return (
-//     <div id="main">
-//
-//     </div>
-//   );
-// }
-//
-// export default Area;
+import React, {useRef} from 'react';
+import '@toast-ui/chart/dist/toastui-chart.min.css';
+import { AreaChart } from "@toast-ui/react-chart";
+
+function Area() {
+  const data = {
+    categories: ['June', 'July', 'Aug', 'Sep', 'Oct', 'Nov'],
+    series: [
+      {
+        name: '달성도',
+        data: [5000, 3000, 5000, 7000, 6000, 4000], //백엔드에서 넘겨받는 값
+      },
+    ],
+  };
+
+  const options = {
+    chart: {
+      width: 1160,
+      height: 650,
+      title: 'My Achievement',
+    },
+    yAxis: {
+      title: '달성도',
+    },
+    xAxis: {
+      title: '기간',
+    },
+    series: {
+    zoomable: true,
+    spline: true,
+      dataLabels : {
+        visible: false
+      }
+    }
+  };
+
+  const containerStyle = {
+    width: '600px',
+    height: '600px',
+  };
+
+
+
+  let chartRef = useRef(null);
+  return (
+    <div className="area">
+      <AreaChart ref={chartRef} data={data} options={options} style={containerStyle}/>
+    </div>
+  );
+}
+
+
+
+export default Area;
