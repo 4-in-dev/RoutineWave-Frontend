@@ -27,7 +27,7 @@ const getStartEndAngle = (state) => {
 
   const startTime = state.jobs[0][1];
   const startAngle = Math.floor(startTime / 100) + (startTime % 100 > 0 ? 0.5 : 0);
-
+  
   return {
     start: 15 * startAngle,
     end: 360 + 15 * startAngle,
@@ -100,7 +100,8 @@ const jobSlice = createSlice({
       state.jobsOfMonth = action.payload
     },
     adjustTplJob(state, action) {
-      state.series = jobToDayRoutine(action.payload);
+      state.jobs = action.payload;
+      state.series = jobToDayRoutine(state.jobs);
       state.angleRange = getStartEndAngle(state);
     }
   },

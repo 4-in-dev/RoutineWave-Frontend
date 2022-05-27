@@ -39,6 +39,16 @@ const DayRoutine = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["is_login"]);
 
   const chartRef = useRef(null);
+  
+  const reRenderAndDestroyPreviousChart = () => {
+    if (chartRef.current !== null) {
+      chartRef.current.getInstance().destroy();
+      document
+        .querySelector(".day-routine-wrapper")
+        .removeChild(document.querySelector(".day-routine-wrapper > div"));
+      setChartReRenderHelper([...chartReRenderHelper, 1]);
+    }
+  };
 
   useEffect(() => {
     const numArr = Array.from({ length: 24 }, (v, i) => i + 1);
@@ -69,7 +79,7 @@ const DayRoutine = () => {
       reRenderAndDestroyPreviousChart();
       dispatch(jobActions.setIsDateChange(false));
     }
-  }, [myRountineStartAngle]);
+  }, [dispatch, myRountineStartAngle]);
 
   const showAddRountineHandler = () => {
     setAddRoutineModalIsShown(true);
@@ -118,14 +128,6 @@ const DayRoutine = () => {
       }
     }
     unselectSeriesHandler();
-  };
-
-  const reRenderAndDestroyPreviousChart = () => {
-    chartRef.current.getInstance().destroy();
-    document
-      .querySelector(".day-routine-wrapper")
-      .removeChild(document.querySelector(".day-routine-wrapper > div"));
-    setChartReRenderHelper([...chartReRenderHelper, 1]);
   };
 
   return (

@@ -1,66 +1,25 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useCookies } from "react-cookie";
 
 import styled from "styled-components";
-import * as CONSTANT from "../../../lib/constants";
-import { getHHmmFormat } from "../../../lib/util";
 import { jobActions } from "../../../store/job";
 
 const RoutineTemplate = () => {
   const dispatch = useDispatch();
   const entireJobs = useSelector((state) => state.job.jobs);
-  const auth = useSelector((state) => state.auth);
-  const currDate = useSelector((state) => state.job.date);
-  const jobsOfMonth = useSelector((state) => state.job.jobsOfMonth);
 
-  const [cookies, setCookie, removeCookie] = useCookies(["is_login"]);
   const [routineTemplates, setRoutineTemplates] = useState([]);
-  const [isSelectedTpl, setIsSelectedTpl] = useState(false);
   const [currTpl, setCurrTpl] = useState("");
-  const [removeTpl, setRemoveTpl] = useState("");
 
   useState(() => {
     const tempKeyStorage = [];
     for (const key in localStorage) {
       if (key.includes("tpl")) {
-        console.log(key);
         tempKeyStorage.push(key);
       }
     }
     setRoutineTemplates(tempKeyStorage);
   }, []);
-
-  const reqSaveJob = async (job) => {
-    const serverUrl = `/api/Schedulestemplate/`;
-
-    let reqData = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${cookies.is_login}`,
-        "X-CSRFToken": cookies.csrftoken,
-      },
-      body: JSON.stringify({
-        writer: auth.user.pk,
-        content: job[CONSTANT.INDEX_OF_CONTENT],
-        is_finished: job[CONSTANT.INDEX_OF_IS_FINISH],
-        start_date: currDate,
-        start_time: `${getHHmmFormat(String(job[CONSTANT.INDEX_OF_STARTTIME]))}`,
-        end_date: currDate,
-        end_time: "00:00",
-        template_name: "temp2",
-      }),
-    };
-    try {
-      const response = await fetch(serverUrl, reqData);
-      const responseData = await response.json();
-    } catch (error) {
-      console.log(error.message);
-      return false;
-    }
-    return true;
-  };
 
   const addClickHandler = (e) => {
     const templateName = window.prompt(
@@ -81,17 +40,14 @@ const RoutineTemplate = () => {
   const clickedTplHandler = (e) => {
     const tplKey = `tpl-${e.target.textContent}`;
     const tplValue = JSON.parse(window.localStorage.getItem(tplKey));
-    console.log(tplKey, tplValue.jobs);
+    
     setCurrTpl(tplKey);
     dispatch(jobActions.adjustTplJob(tplValue.jobs));
-    dispatch(jobActions.setIsDateChange(false));
-    setIsSelectedTpl(true);
+    dispatch(jobActions.setIsDateChange(true));
   };
 
   const deleteClickHandler = () => {
-    console.log('remove', currTpl)
     window.localStorage.removeItem(currTpl);
-    setRemoveTpl(currTpl);
   }
 
   return (
@@ -102,9 +58,9 @@ const RoutineTemplate = () => {
           <TemplateBlock onClick={addClickHandler}>+</TemplateBlock>
           <TemplateBlock onClick={deleteClickHandler}>x</TemplateBlock>
           {routineTemplates.length > 0 &&
-            routineTemplates.map((tpl) => {
+            routineTemplates.map((tpl, i) => {
               return (
-                  <TemplateBlock onClick={clickedTplHandler}>{tpl.slice(4)}</TemplateBlock>
+                  <TemplateBlock onClick={clickedTplHandler} key={i}>{tpl.slice(4)}</TemplateBlock>
               );
             })}
         </TemplateArea>
